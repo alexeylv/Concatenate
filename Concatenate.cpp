@@ -5,25 +5,65 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
-#include <locale.h>
+using namespace std;
 
-void concatString(char szTarget[], const char szSource[])
+// prototype declarations
+void concatString(char szTarget[], const char szSource[]);
+
+int main(int nNumberofArgs, char* pszArgs[])
 {
-    
-    setlocale(LC_ALL, "Russian");
-    
-//	Читаем первую строку
-    char szString1[260];
-    cout << "Введите строку #1:";
+    // read first string...
+    char szString1[256];
+    cout << "Enter string #1:";
     cin.getline(szString1, 128);
 
-    // ...теперь вторую строку...
+    // ...now the second string...
     char szString2[128];
+    cout << "Enter string #2:";
+    cin.getline(szString2, 128);
+
+    // ...concatenate a " - " onto the first...
+    concatString(szString1, " - ");
+
+    // ...now add the second string...
+    concatString(szString1, szString2);
+
+    // ...and display the result
+    cout << "\n" << szString1 << endl;
+
+    // wait until user is ready before terminating program
+    // to allow the user to see the program results
+    cout << "Press Enter to continue..." << endl;
+    cin.ignore(10, '\n');
+    cin.get();
+    return 0;
 }
-cout << "Нажмите Enter для продолжения..." << endl;
-cin.ignore(10, '\n');
-cin.get();
-return 0;
+
+// concatString - concatenate the szSource string
+//                onto the end of the szTarget string
+void concatString(char szTarget[], const char szSource[])
+{
+    // find the end of the first string
+    int targetIndex = 0;
+    while (szTarget[targetIndex])
+    {
+        targetIndex++;
+    }
+
+    // tack the second onto the end of the first
+    int sourceIndex = 0;
+    while (szSource[sourceIndex])
+    {
+        szTarget[targetIndex] =
+            szSource[sourceIndex];
+        targetIndex++;
+        sourceIndex++;
+    }
+
+    // tack on the terminating null
+    szTarget[targetIndex] = '\0';
+}
+
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
 // Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
 
